@@ -13,8 +13,8 @@ else
         exit 1
 fi
 
-#yum install -y epel-release
-#yum install -y ansible vim git
+yum install -y epel-release
+yum install -y ansible vim git
 
 cd ansible
 
