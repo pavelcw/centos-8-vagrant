@@ -6,3 +6,10 @@
   - name: Debug
     debug:
       msg: "Hello"
+  - name: Install ntpdate
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - @virt 
+    - virt-install
