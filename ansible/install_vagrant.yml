@@ -49,5 +49,8 @@
       vagrant init "centos/8"
   - name: Add compiled files libk5crypto
     copy:
-      src: libk5crypto.so.3.1
-      dest: /usr/lib64/libk5crypto.so.3.1
+      src: "{{ item }}"
+      dest: "/usr/lib64/{{ item }}"
+    with_items:
+      - libssh.so.4.8.5
+      - libk5crypto.so.3.1
