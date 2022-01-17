@@ -7,10 +7,9 @@
     debug:
       msg: "Hello"
   - name: Install ruby 2.6 by yum
-    yum:
-      name:
-        - ruby=2.6
-      state: present
+    shell: |
+      dnf -y module reset ruby
+      dnf -y module enable ruby:2.6
 
   - name: Install virt group
     package:
@@ -19,6 +18,7 @@
     with_items:
     - "@virt" 
     - virt-install
+    - ruby
     - ruby-devel
     - make 
     - gcc
