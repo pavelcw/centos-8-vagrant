@@ -29,3 +29,4 @@
     gem:
       name: nokogiri
       state: latest
+      user_install: yes
