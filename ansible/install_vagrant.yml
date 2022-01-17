@@ -9,7 +9,7 @@
   - name: Install ruby 2.6 by yum
     dnf: 
       name:
-        - ruby=2.6
+        - ruby=2.6.7
       state: present
           #dnf -y module reset ruby
           #dnf -y module enable ruby:2.6
