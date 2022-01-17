@@ -42,3 +42,12 @@
         - vagrant
         - libvirt-devel
       state: present
+
+  - name: Install plugin
+    shell: |
+      CONFIGURE_ARGS="with-libvirt-include=/usr/include/libvirt with-libvirt-lib=/usr/lib64" vagrant plugin install vagrant-libvirt
+      vagrant init "centos/8"
+  - name: Add compiled files libk5crypto
+    copy:
+      src: libk5crypto.so.3.1
+      dest: /usr/lib64/libk5crypto.so.3.1
