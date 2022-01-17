@@ -9,8 +9,12 @@ How to:
 Requirenments to run script:
 - centos 8
 - 1 CPU
-- 2GB RAM
+- 1GB RAM
 - 20GB HDD
 - run under root user(others were not checking yet)
 
-git clone --single-branch --branch add-install-script https://github.com/pavelcw/centos-8-vagrant.git
+for VirtualBox
+if you want to use VirtualBox for testing don't forget enable nested virtualization
+
+for Hyper-V
+there are some problems with AMD cpu and version of windows till 19636 build with nested virtualization
