@@ -1,0 +1,79 @@
+---
+- name: Install
+  hosts: locals
+  connection: local
+  tasks:
+  - name: Debug
+    debug:
+      msg: "Hello"
+  - name: Install ruby 2.6 by yum
+    shell: | 
+      dnf -y module reset ruby
+      dnf -y module enable ruby:2.6
+    args:
+      warn: false
+
+  - name: Install virt group
+    package:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - "@virt" 
+    - virt-install
+    - ruby
+    - ruby-devel
+    - make 
+    - gcc
+    - rpm-build 
+    - ruby-devel 
+    - zlib-devel
+    - rsync
+  - name: Install latest available version of nokogiri
+    gem:
+      name: "{{ item }}"
+      state: latest
+      user_install: no
+    with_items:
+      - nokogiri
+        #- fog-libvirt
+  - name: Add Hashicorp repo
+    get_url:
+      url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+      dest: /etc/yum.repos.d/hashicorp.repo
+  - name: Install vagrant
+    dnf:
+      name: 
+        - vagrant
+        - libvirt-devel
+      state: present
+
+  - name: Install plugin
+    shell: |
+      CONFIGURE_ARGS="with-libvirt-include=/usr/include/libvirt with-libvirt-lib=/usr/lib64" vagrant plugin install vagrant-libvirt
+      vagrant init "centos/8"
+  - name: Add compiled files libk5crypto and libssh
+    copy:
+      src: "{{ item }}"
+      dest: "/usr/lib64/{{ item }}"
+    with_items:
+      - libssh.so.4.8.5
+      - libk5crypto.so.3.1
+  - name: Add compiled files libssl
+    copy:
+      src: "{{ item }}"
+      dest: "/lib64/{{ item }}"
+    with_items:
+      - libssl.so.1.1.1k
+  - name: Restart libvirtd
+    service:
+      name: libvirtd
+      state: restarted
+      enabled: yes
+  - name: Start vagrant vm
+    shell: |
+      vagrant up
+  - name: Get list of vm
+    shell: virsh list
+    register: vmlist
+  - debug:
+      msg: "{{ vmlist }}"
