@@ -30,11 +30,12 @@
     - rsync
   - name: Install latest available version of nokogiri
     gem:
-      name: 
-        - nokogiri
-        - fog-libvirt
+      name: "{{ item }}"
       state: latest
       user_install: no
+      with_items:
+        - nokogiri
+        - fog-libvirt
   - name: Add Hashicorp repo
     get_url:
       url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
