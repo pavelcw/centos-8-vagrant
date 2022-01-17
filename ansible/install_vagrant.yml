@@ -1,0 +1,8 @@
+---
+- name: Install
+  hosts: locals
+  connection: local
+  tasks:
+  - name: Debug
+    debug:
+      msg: "Hello"
