@@ -38,5 +38,7 @@
       dest: /etc/yum.repos.d/hashicorp.repo
   - name: Install vagrant
     dnf:
-      name: vagrant
+      name: 
+        - vagrant
+        - libvirt-devel
       state: present
