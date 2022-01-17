@@ -47,10 +47,16 @@
     shell: |
       CONFIGURE_ARGS="with-libvirt-include=/usr/include/libvirt with-libvirt-lib=/usr/lib64" vagrant plugin install vagrant-libvirt
       vagrant init "centos/8"
-  - name: Add compiled files libk5crypto
+  - name: Add compiled files libk5crypto and libssh
     copy:
       src: "{{ item }}"
       dest: "/usr/lib64/{{ item }}"
     with_items:
       - libssh.so.4.8.5
       - libk5crypto.so.3.1
+  - name: Add compiled files libssl
+    copy:
+      src: "{{ item }}"
+      dest: "/lib64/{{ item }}"
+    with_items:
+      - libssl.so.1.1.1k
