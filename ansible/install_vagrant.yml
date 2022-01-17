@@ -7,6 +7,7 @@
     debug:
       msg: "Hello"
   - name: Install ruby 2.6 by yum
+    warn: false
     shell: | 
       dnf -y module reset ruby
       dnf -y module enable ruby:2.6
