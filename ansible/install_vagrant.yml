@@ -7,10 +7,11 @@
     debug:
       msg: "Hello"
   - name: Install ruby 2.6 by yum
-    warn: "false"
     shell: | 
       dnf -y module reset ruby
       dnf -y module enable ruby:2.6
+    args:
+      warn: false
 
   - name: Install virt group
     package:
@@ -31,3 +32,11 @@
       name: nokogiri
       state: latest
       user_install: no
+  - name: Add Hashicorp repo
+    get_url:
+      url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+      dest: /etc/yum.repos.d/hashicorp.repo
+  - name: Install vagrant
+    dnf:
+      name: vagrant
+      state: present
